@@ -1,3 +1,4 @@
+# encoding: utf-8
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
@@ -5,6 +6,7 @@ from pptx.enum.text import PP_ALIGN
 import requests
 import time
 import datetime
+import os
 from Tkinter import *
 
 
@@ -61,7 +63,7 @@ class App:
 
             txBox = slide.shapes.add_textbox(
                 Inches(0), Inches(3), prs.slide_width, Inches(1.5))
-            # txBox.vertical_anchor = MSO_ANCHOR.MIDDLE
+            #txBox.vertical_anchor = MSO_ANCHOR.MIDDLE
 
             tf = txBox.text_frame
             p = tf.paragraphs[0]
@@ -83,11 +85,12 @@ class App:
             txBox.fill.fore_color.rgb = RGBColor(0x00, 0x00, 0x00)
             txBox.fill.fore_color.brightness = 0.4
 
-            time.sleep(2)
+            time.sleep(2.5)
             i = i + 2
 
-        filename = str(lines[0]) + '.pptx'
+        filename = lines[0].encode('utf-8') + '.pptx'
         prs.save(filename)
+        os.rename(filename, lines[0] + '.pptx')
         App.show_message(self, "Done!")
 
 
@@ -96,4 +99,4 @@ app = App(root)
 root.resizable(width=FALSE, height=FALSE)
 
 root.mainloop()
-root.destroy()  # optional; see description below
+root.destroy()
